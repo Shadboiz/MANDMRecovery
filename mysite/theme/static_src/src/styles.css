@@ -3,30 +3,30 @@
 
 /* === Font Faces === */
 @font-face {
-  font-family: 'Inter';
-  src: url('https://cdn.mandmrecovery.co.uk/Inter-Font-Normal.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("https://cdn.mandmrecovery.co.uk/Inter-VariableFont_opsz%2Cwght.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Mulish';
-  src: url('https://cdn.mandmrecovery.co.uk/Mulish-Font-Normal.ttf') format('truetype');
+  font-family: "Mulish";
+  src: url("https://cdn.mandmrecovery.co.uk/Mulish-VariableFont_wght.ttf") format("truetype");
   font-weight: 200 1000;
   font-style: normal;
   font-display: swap;
 }
 
 @theme {
-  --color-light-blue: #3667F2;
-  --color-dark-blue: #2146A8;
+  --color-light-blue: #3667f2;
+  --color-dark-blue: #2146a8;
+  --color-cream: #fffaeb;
+  --color-grayish: #e8e7f5;
 }
-
 
 /* === Base Styles === */
 @layer base {
-
   /* Headings - Mulish */
   h1,
   h2,
@@ -34,7 +34,7 @@
   h4,
   h5,
   h6 {
-    font-family: 'Mulish', sans-serif;
+    font-family: "Mulish", sans-serif;
   }
 
   h1 {
@@ -43,11 +43,14 @@
 
   h2,
   h3 {
-    @apply text-3xl md:text-5xl tracking-wider;
+    @apply tracking-wider;
   }
 
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
   h3 {
-    @apply text-2xl md:text-4xl;
+    @apply text-2xl md:text-4xl leading-tight font-semibold;
   }
 
   h4,
@@ -57,11 +60,11 @@
   }
 
   h4 {
-    @apply text-4xl md:text-5xl;
+    @apply text-3xl md:text-4xl;
   }
 
   h5 {
-    @apply text-3xl;
+    @apply text-2xl;
   }
 
   h6 {
@@ -73,10 +76,13 @@
   span,
   a,
   button {
-    font-family: 'Inter', sans-serif;
-    @apply md:text-lg lg:text-xl leading-relaxed;
+    font-family: "Inter", sans-serif;
+    @apply md:text-lg lg:text-lg leading-relaxed;
   }
 
+  p {
+    @apply leading-relaxed;
+  }
   a,
   button {
     @apply tracking-normal;
@@ -86,12 +92,12 @@
 /* === Custom Component Styling === */
 @layer components {
   .blue-btn {
-    font-family: 'Mulish', 'Inter', sans-serif;
-    @apply bg-light-blue rounded-4xl shadow-2xl backdrop-blur-2xl hover:cursor-pointer text-white px-8 py-4
+    font-family: "Mulish", "Inter", sans-serif;
+    @apply bg-light-blue rounded-4xl shadow-2xl backdrop-blur-2xl hover:cursor-pointer text-white px-8 py-4;
   }
 
   .golden-shiny-btn {
-    font-family: 'Mulish', 'Inter', sans-serif;
+    font-family: "Mulish", "Inter", sans-serif;
     @apply hover:scale-100;
   }
 }

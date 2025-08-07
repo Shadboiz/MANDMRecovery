@@ -2,36 +2,89 @@
 {% extends 'mysite/base.html' %}
 {% load static %}
 {% load static tailwind_tags %}
+{% block headscript %}
+
+<script>
+  window.scrollingRow = function () {
+    return {
+      offset: 0,
+      speed: 0.2,
+      start() {
+        this.move();
+      },
+      move() {
+        setInterval(() => {
+          this.offset -= this.speed;
+          const container = document.querySelector("[x-data]");
+          if (container) {
+            const totalWidth = container.scrollWidth / 2;
+            if (Math.abs(this.offset) >= totalWidth) {
+              this.offset = 0;
+            }
+          }
+        }, 16);
+      },
+    };
+  };
+</script>
+<script>
+  function mobileScrollingRow(reviewCount) {
+    return {
+      active: 0,
+      total: 3,
+      reviewCount: reviewCount,
+      interval: null,
+      init() {
+        this.startAutoplay();
+      },
+      startAutoplay() {
+        this.interval = setInterval(() => {
+          this.nextSlide();
+        }, 5000);
+      },
+      stopAutoplay() {
+        clearInterval(this.interval);
+      },
+      nextSlide() {
+        this.active = (this.active + 1) % this.reviewCount;
+      },
+      prevSlide() {
+        this.active = (this.active - 1 + this.reviewCount) % this.reviewCount;
+      },
+      swipeStartX: 0,
+      swipeEndX: 0,
+      handleSwipe() {
+        const diff = this.swipeEndX - this.swipeStartX;
+        if (Math.abs(diff) > 50) {
+          diff < 0 ? this.nextSlide() : this.prevSlide();
+        }
+      },
+      setDot(i) {
+        this.active = i * Math.ceil(this.reviewCount / this.total);
+      },
+      get dotIndex() {
+        return Math.floor(this.active / Math.ceil(this.reviewCount / this.total));
+      },
+    };
+  }
+</script>
+{% endblock %}
 
 <!-- prettier-ignore-->
 {% block body %}
 <body class="bg-white antialiased text-black">
-  <section
-    id="index"
-    class="relative min-h-[88svh] w-full bg-cover bg-center overflow-hidden transform-gpu will-change-transform flex items-center justify-center"
-  >
+  <section id="index" class="relative min-h-[88svh] w-full bg-cover bg-center overflow-hidden transform-gpu will-change-transform flex items-center justify-center">
     {% block navbar %}
     <!--prettier-ignore -->
     {% include 'includes/navbar.html' %}
     {% endblock navbar %}
 
     <!-- Hero Image Section -->
-    <figure
-      class="absolute inset-0 w-full h-full object-cover object-center z-[-10] pointer-events-none"
-    >
-      <img
-        class="absolute inset-0 w-full h-full object-cover object-center z-[-10] pointer-events-none m-0"
-        id="hero-image"
-        src="https://cdn.mandmrecovery.co.uk/hero-section-image.webp"
-        alt=""
-      />
+    <figure class="absolute inset-0 w-full h-full object-cover object-center z-[-10] pointer-events-none">
+      <img class="absolute inset-0 w-full h-full object-cover object-center z-[-10] pointer-events-none m-0" id="hero-image" src="https://cdn.mandmrecovery.co.uk/hero-section-image.webp" alt="" />
     </figure>
-    <main
-      class="z-10 flex w-full flex-col items-center justify-center text-start flex-grow md:pb-5"
-    >
-      <div
-        class="flex flex-col text-start container mx-auto justify-center space-y-7"
-      >
+    <main class="z-10 flex w-full flex-col items-center justify-center text-start flex-grow md:pb-5">
+      <div class="flex flex-col text-start container mx-auto justify-center space-y-7">
         <div class="max-w-xl md:max-w-2xl space-y-7 text-white">
           <h1>{{ site_essentials.headline }}</h1>
           <p>{{ site_essentials.subheadline}}</p>
@@ -39,6 +92,259 @@
         <div>
           <button class="blue-btn">{{ site_essentials.cta }}</button>
         </div>
+      </div>
+    </main>
+  </section>
+
+  <section class="min-h-svh py-20 bg-white">
+    <main class="container mx-auto px-4">
+      <!-- Text Section -->
+      <div class="text-center mx-auto max-w-3xl mb-12">
+        <h2 class="mb-4">Why Thousands Trust M & M Recovery</h2>
+        <p class="text-gray-700">Welcome to RST Breakdown Recovery. We specialise in breakdown management, vehicle recovery, and repairs. Whether you need roadside assistance, recovery, or expert repairs, we provide fast and efficient solutions to get you back on the road or home.</p>
+      </div>
+
+      <div class="flex flex-col-reverse md:flex-col">
+        <!-- 3 Cards Section USPS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-start mb-16">
+          <div class="flex flex-col items-start bg-dark-blue text-white p-8 space-y-7">
+            <img class="h-16 w-auto mb-4" src="https://cdn.mandmrecovery.co.uk/whatsaap.svg" alt="WhatsApp Communication" />
+            <div class="space-y-1">
+              <h3>WhatsApp Communication</h3>
+              <p class="text-white">Stay reassured through instant messaging and live updates.</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-start bg-cream p-8">
+            <img class="h-16 w-auto mb-4" src="https://cdn.mandmrecovery.co.uk/time.svg" alt="Real-Time ETA Updates" />
+            <div class="space-y-1">
+              <h3>Real-Time ETA Updates</h3>
+              <p>Know exactly when help is arriving – no guessing, no stress.</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center bg-center bg-cream p-8">
+            <img class="h-16 w-auto mb-4" src="https://cdn.mandmrecovery.co.uk/shield.svg" alt="Reliable Service" />
+            <div class="space-y-1">
+              <h3>Reliable Service You Can Count On</h3>
+              <p>Fully insured, licensed, and equipped for any vehicle emergency.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thumbs Up Card Section -->
+        <div class="flex justify-center mb-6">
+          <img class="h-[67svh] lg:w-full lg:h-auto object-cover shadow-xl" src="https://cdn.mandmrecovery.co.uk/thumbs-up-man-card.png" alt="Thumbs Up" />
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row justify-center items-stretch w-full gap-4 py-20">
+        <!-- Car Card -->
+        <div class="flex flex-row items-stretch space-x-7">
+          <div class="flex items-center h-full">
+            <img class="h-[70%] w-auto object-contain" src="https://cdn.mandmrecovery.co.uk/blue-car-icon.svg" alt="" />
+          </div>
+
+          <div class="flex flex-col justify-center">
+            <h4 class="italic font-extrabold">1000+</h4>
+            <p>Transported Successfully</p>
+          </div>
+        </div>
+
+        <!-- Line Vector -->
+        <div class="flex">
+          <img class="h-full object-contain hidden md:flex" src="https://cdn.mandmrecovery.co.uk/line-vector.svg" alt="" />
+        </div>
+
+        <div class="flex flex-row items-stretch space-x-7">
+          <div class="flex items-center h-full">
+            <img class="h-[70%] w-auto object-contain" src="https://cdn.mandmrecovery.co.uk/blue-star-icon.svg" alt="" />
+          </div>
+
+          <div class="flex flex-col justify-center">
+            <h4 class="italic font-extrabold">5 Stars</h4>
+            <p>By local Glaswegians</p>
+          </div>
+        </div>
+
+        <!-- Line Vector -->
+        <div class="flex">
+          <img class="h-full object-contain hidden md:flex" src="https://cdn.mandmrecovery.co.uk/line-vector.svg" alt="" />
+        </div>
+
+        <div class="flex flex-row items-stretch space-x-7">
+          <div class="flex items-center h-full">
+            <img class="h-[70%] w-auto object-contain" src="https://cdn.mandmrecovery.co.uk/blue-staff.svg" alt="" />
+          </div>
+
+          <div class="flex flex-col justify-center">
+            <h4 class="italic font-extrabold">10+</h4>
+            <p>Staff members</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <section class="relative max-h-screen w-full py-16 md:py-40 space-y-10 lg:space-y-0 flex-col items-center justify-center">
+    <!-- Heading + CTA -->
+    <div class="container mx-auto flex flex-col items-center justify-center text-center lg:flex-row lg:items-center lg:justify-between lg:text-start w-full mb-16">
+      <h2>Rated 5 Stars On Google</h2>
+    </div>
+
+    <!-- Arrows + Reviews Row -->
+    <main class="container mx-auto">
+      <!-- ✅ Desktop Only -->
+      <div class="hidden sm:block w-full overflow-hidden">
+        <div class="relative w-full h-full">
+          <div class="flex items-center space-x-8 w-max h-[50svh] overflow-hidden" x-data="scrollingRow()" x-init="start()" :style="{ transform: `translateX(${offset}px)` }">
+            {% for review in reviews %}
+            <a href="https://www.yell.com/biz/pol-tile-services-ltd-glasgow-8763443/" class="w-96 flex-shrink-0">
+              <div class="flex flex-col flex-1 p-10 outline-1 outline-light-blue shadow-sm rounded-lg bg-white text-dark-gray hover:scale-110 duration-150 ease-in-out">
+                <div class="flex flex-row w-full justify-between mb-5">
+                  <div class="h-14 w-auto shrink-0">
+                    <img src="https://cdn.mandmrecovery.co.uk/g-logo.png" alt="Review Platform Logo" class="w-full h-full" />
+                  </div>
+                  <div class="h-14 w-auto shrink-0">
+                    <img src="https://cdn.mandmrecovery.co.uk/quote.svg" alt="Quote Icon" class="w-full h-full" />
+                  </div>
+                </div>
+                <div class="mb-8">
+                  <p class="max-w-xl text-left text-sm leading-relaxed line-clamp-5">“{{ review.body }}”</p>
+                </div>
+                <div class="flex flex-row space-x-5">
+                  <div class="w-[58px] h-[58px]">
+                    <img src="{{ review.profile_picture }}" alt="Reviewer Profile Picture" class="w-full h-full rounded-full" />
+                  </div>
+                  <div class="flex flex-col font-inter justify-center">
+                    <span class="font-semibold leading-relaxed tracking-tighter text-dark-gray">{{ review.author }}</span>
+                    <span class="text-[#969FB7] text-sm">{{ review.time_ago }}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+
+            <!-- Duplicate for infinite scroll -->
+            {% for review in reviews %}
+            <a href="https://www.yell.com/biz/pol-tile-services-ltd-glasgow-8763443/" class="w-96 flex-shrink-0">
+              <div class="flex flex-col flex-1 p-10 outline outline-1 outline-light-blue shadow-sm rounded-lg bg-white text-dark-gray hover:scale-110 duration-150 ease-in-out">
+                <div class="flex flex-row w-full justify-between mb-5">
+                  <div class="h-14 w-auto shrink-0">
+                    <img src="https://cdn.mandmrecovery.co.uk/g-logo.png" alt="Review Platform Logo" class="w-full h-full" />
+                  </div>
+                  <div class="h-14 w-auto shrink-0">
+                    <img src="https://cdn.mandmrecovery.co.uk/quote.svg" alt="Quote Icon" class="w-full h-full" />
+                  </div>
+                </div>
+                <div class="mb-8">
+                  <p class="max-w-xl text-left text-sm leading-relaxed line-clamp-5">“{{ review.body }}”</p>
+                </div>
+                <div class="flex flex-row space-x-5">
+                  <div class="w-[58px] h-[58px]">
+                    <img src="{{ review.profile_picture }}" alt="Reviewer Profile Picture" class="w-full h-full rounded-full" />
+                  </div>
+                  <div class="flex flex-col font-inter justify-center">
+                    <span class="font-semibold leading-relaxed tracking-tighter text-dark-gray">{{ review.author }}</span>
+                    <span class="text-[#969FB7] text-sm">{{ review.time_ago }}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ Mobile Swiper -->
+      <div class="sm:hidden w-full overflow-hidden" x-data="mobileScrollingRow({{ reviews|length }})">
+        <!-- Slides Wrapper -->
+        <div
+          class="flex transition-transform duration-700 ease-in-out"
+          :style="'transform: translateX(-' + (active * 100) + '%)'"
+          style="width: 300%"
+          @touchstart="swipeStartX = $event.touches[0].clientX"
+          @touchend="swipeEndX = $event.changedTouches[0].clientX; handleSwipe()"
+          @mouseenter="stopAutoplay()"
+          @mouseleave="startAutoplay()"
+        >
+          {% for review in reviews %}
+          <div class="w-full flex-shrink-0 px-4 py-6">
+            <div class="flex flex-col flex-1 p-6 outline outline-1 outline-light-blue shadow-sm rounded-lg bg-white text-dark-gray">
+              <div class="flex flex-row w-full justify-between mb-5">
+                <div class="h-12 w-auto shrink-0">
+                  <img src="https://cdn.mandmrecovery.co.uk/g-logo.png" alt="Review Logo" class="w-full h-full" />
+                </div>
+                <div class="h-12 w-auto shrink-0">
+                  <img src="https://cdn.mandmrecovery.co.uk/quote.svg" alt="Quote Icon" class="w-full h-full" />
+                </div>
+              </div>
+              <div class="mb-6">
+                <p class="text-left text-sm leading-relaxed line-clamp-4">“{{ review.body }}”</p>
+              </div>
+              <div class="flex flex-row space-x-4">
+                <div class="w-12 h-12">
+                  <img src="{{ review.profile_picture }}" alt="Reviewer" class="w-full h-full rounded-full" />
+                </div>
+                <div class="flex flex-col font-inter justify-center">
+                  <span class="font-semibold leading-relaxed tracking-tighter text-dark-gray">{{ review.author }}</span>
+                  <span class="text-[#969FB7] text-sm">{{ review.time_ago }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Dots -->
+        <div class="mt-6 flex justify-center space-x-2">
+          <template x-for="i in total" :key="i">
+            <button @click="setDot(i - 1)" class="focus:outline-none">
+              <img :src="dotIndex === (i - 1) ? '{% static 'small_icons/selected.svg' %}' : '{% static 'small_icons/unselected.svg' %}'" class="w-4 h-4" alt="dot" />
+            </button>
+          </template>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <section class="py-20 bg-grayish">
+    <main class="container mx-auto px-4">
+      <div class="text-center mx-auto max-w-3xl mb-12">
+        <h2 class="mb-4">What We Do</h2>
+      </div>
+
+      <!-- Card Section -->
+      <div class="flex flex-wrap justify-center gap-6">
+        <!-- Card 1 -->
+        <div class="bg-white w-full md:w-[22%] p-5 rounded-3xl shadow-md">
+          <img class="w-full min-h-[20svh] object-cover rounded-xl mb-4" src="https://cdn.mandmrecovery.co.uk/tyre-change.png" alt="Tyre Change" />
+          <h5>Tyre Change & Inflation</h5>
+          <p class="text-[16px]">Flat or worn-out tyre? We’ll replace it on the spot or inflate your spare to get you rolling safely.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white w-full md:w-[22%] p-5 rounded-3xl shadow-md">
+          <img class="w-full min-h-[20svh] object-cover rounded-xl mb-4"" src="https://cdn.mandmrecovery.co.uk/oil-change.png" alt="Oil Change" />
+          <h5>Oil Change Service</h5>
+          <p>Keep your engine healthy with timely oil changes — we offer mobile oil services at your location.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white w-full md:w-[22%] p-5 rounded-3xl shadow-md">
+          <img class="w-full min-h-[20svh] object-cover rounded-xl mb-4" src="https://cdn.mandmrecovery.co.uk/battery-start.png" alt="Battery Jumpstart" />
+          <h5>Battery Jumpstart & Replacement</h5>
+          <p>Dead battery? We provide quick jumpstarts or replace your battery wherever you are.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white w-full md:w-[22%] p-5 rounded-3xl shadow-md">
+          <img class="w-full min-h-[20svh] object-cover rounded-xl mb-4" src="https://cdn.mandmrecovery.co.uk/fluid-coolants.png" alt="Coolant Top-Ups" />
+          <h5>Coolant & Fluid Top-Ups</h5>
+          <p>Overheating or low fluids? Our team can top up engine coolant, brake fluid, and more.</p>
+        </div>
+      </div>
+
+      <div class="mt-7 w-full flex items-center justify-center">
+        <button class="blue-btn">{{ site_essentials.cta }}</button>
       </div>
     </main>
   </section>

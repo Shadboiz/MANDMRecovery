@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "mysite",
     "tailwind",
+    "googlereviews",
     "theme",
     "django_browser_reload",
 ]
@@ -127,13 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = "/var/www/staticfiles/movebrothers/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-
 MEDIA_URL = "/media/"
-MEDIA_ROOT = "/var/www/mediafiles/movebrothers/"
 
 
 # myproject/settings.py
