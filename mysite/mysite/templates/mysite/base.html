@@ -1,0 +1,45 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+    </style>
+
+    <!-- End Google Tag Manager -->
+    {% tailwind_css %}
+    <link rel="icon" type="image/png" href="{% static 'fav.png' %}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% block title %}Car Recovery{% endblock title %}</title>
+
+    {% block style %}
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+    {% endblock style %} {% block headscript %} {% endblock %}
+  </head>
+
+  <!-- prettier-ignore -->
+  {% block body %}
+     {% block navbar %}
+     {% include 'includes/navbar.html' %}
+     {% endblock navbar %} 
+     {% endblock body %} 
+     {% block scripts %} 
+     {% block extra_scripts %}
+  <!-- Add extra per-page scripts here -->
+  {% endblock extra_scripts %} {% endblock scripts %}
+</html>
