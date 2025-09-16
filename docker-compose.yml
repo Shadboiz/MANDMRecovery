@@ -1,0 +1,26 @@
+services:
+  server:
+    container_name: mandmrecovery
+    image: mandm-image
+    build: .
+    ports:
+      - "8007:8000"
+    volumes:
+      - ./mysite:/app/mysite
+    command: >
+      sh -c "gunicorn mysite.asgi:application --bind 0.0.0.0:8000 --workers 2 --worker-class uvicorn.workers.UvicornWorker --timeout 300"
+    restart: unless-stopped
+
+  server_full:
+    profiles: ["full"]
+    container_name: mandm-full
+    image: poltile-image
+    build: .
+    ports:
+      - "8007:8000"
+    volumes:
+      - ./mysite:/app/mysite
+    command: >
+      sh -c "python manage.py collectstatic --no-input &&
+             gunicorn mysite.asgi:application --bind 0.0.0.0:8000 --workers 2 --worker-class uvicorn.workers.UvicornWorker --timeout 300"
+    restart: unless-stopped
