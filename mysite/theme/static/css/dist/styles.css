@@ -704,6 +704,33 @@
   .bg-gray-300 {
     background-color: var(--color-gray-300);
   }
+  .bg-gray-700\/30 {
+    background-color: color-mix(in srgb, oklch(37.3% 0.034 259.733) 30%, transparent);
+  }
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-gray-700\/30 {
+      background-color: color-mix(in oklab, var(--color-gray-700) 30%, transparent);
+    }
+  }
+  .bg-gray-700\/50 {
+    background-color: color-mix(in srgb, oklch(37.3% 0.034 259.733) 50%, transparent);
+  }
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-gray-700\/50 {
+      background-color: color-mix(in oklab, var(--color-gray-700) 50%, transparent);
+    }
+  }
+  .bg-gray-900 {
+    background-color: var(--color-gray-900);
+  }
+  .bg-gray-900\/40 {
+    background-color: color-mix(in srgb, oklch(21% 0.034 264.665) 40%, transparent);
+  }
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-gray-900\/40 {
+      background-color: color-mix(in oklab, var(--color-gray-900) 40%, transparent);
+    }
+  }
   .bg-grayish {
     background-color: var(--color-grayish);
   }
@@ -789,6 +816,9 @@
   }
   .pt-8 {
     padding-top: calc(var(--spacing) * 8);
+  }
+  .pt-16 {
+    padding-top: calc(var(--spacing) * 16);
   }
   .pr-10 {
     padding-right: calc(var(--spacing) * 10);
@@ -1296,6 +1326,11 @@
   @media (width >= 64rem) {
     .lg\:py-40 {
       padding-block: calc(var(--spacing) * 40);
+    }
+  }
+  @media (width >= 64rem) {
+    .lg\:text-center {
+      text-align: center;
     }
   }
   @media (width >= 64rem) {
