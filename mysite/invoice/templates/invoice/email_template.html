@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>M & M Recovery Invoice</title>
+  </head>
+  <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; font-size: 14px; background-color: #ffffff; color: #000000">
+    <div style="border: 1px solid black; padding: 24px; max-width: 750px; margin: 0 auto">
+      <!-- Header -->
+      <table width="100%" style="border-collapse: collapse">
+        <tr>
+          <td style="text-align: left">
+            <h1 style="font-weight: bold; font-size: 22px; margin: 0">E. Mursal</h1>
+            <p style="margin: 4px 0">350, Nitshill Road, Glasgow, G53 7BT</p>
+            <p style="margin: 4px 0">Tel: 07459 040299</p>
+            <p style="margin: 4px 0">Email: info@mandmrecovery.co.uk</p>
+          </td>
+          <td style="text-align: right">
+            <h2 style="font-weight: bold; font-size: 18px; text-transform: uppercase; margin: 0">M&M Autorecovery Invoice</h2>
+            <p style="border: 1px solid black; padding: 6px 10px; display: inline-block; margin-top: 8px">Invoice No: {{ invoice_number }}</p>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Customer Information -->
+      <h3 style="margin-top: 30px">Customer Information</h3>
+      <table width="100%" style="border-collapse: collapse; margin-top: 10px">
+        <tr>
+          <td style="padding: 6px"><strong>Customer Name:</strong> {{ data.name }}</td>
+          <td style="padding: 6px"><strong>Invoice Date:</strong> {{ data.invoice_date }}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px"><strong>Address:</strong> {{ data.address }}</td>
+          <td style="padding: 6px"><strong>Recovery/Repair Date:</strong> {{ data.recovery_date }}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px"><strong>Postcode:</strong> {{ data.postcode }}</td>
+          <td style="padding: 6px"><strong>Telephone:</strong> {{ data.telephone }}</td>
+        </tr>
+      </table>
+
+      <!-- Vehicle Details -->
+      <h3 style="margin-top: 30px">Vehicle Details</h3>
+      <table width="100%" style="border-collapse: collapse; margin-top: 10px">
+        <tr>
+          <td style="padding: 6px"><strong>Vehicle:</strong> {{ data.vehicle }}</td>
+          <td style="padding: 6px"><strong>Colour:</strong> {{ data.colour }}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px"><strong>Make:</strong> {{ data.make }}</td>
+          <td style="padding: 6px"><strong>Fuel:</strong> {{ data.fuel_type|title }}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px"><strong>Model:</strong> {{ data.model }}</td>
+          <td style="padding: 6px"><strong>Transmission:</strong> {{ data.transmission|title }}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px"><strong>Reg No:</strong> {{ data.reg_number }}</td>
+          <td style="padding: 6px"><strong>Keys Available:</strong> {{ data.keys_available|title }}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px"><strong>Load (kg):</strong> {{ data.load }}</td>
+          <td style="padding: 6px"><strong>Passengers:</strong> {{ data.passengers }}</td>
+        </tr>
+        <tr>
+          <td style="padding: 6px"><strong>Caravan/Trailer:</strong> {{ data.caravan_trailer }}</td>
+          <td style="padding: 6px"><strong>Other Notes:</strong> {{ data.other }}</td>
+        </tr>
+      </table>
+
+      <!-- Recovery Details -->
+      <h3 style="margin-top: 30px">Recovery Details</h3>
+      <table width="100%" style="border-collapse: collapse; margin-top: 10px">
+        <tr>
+          <td style="padding: 6px"><strong>Recovery Location:</strong> {{ data.recovery_location }}</td>
+          <td style="padding: 6px"><strong>Recover To:</strong> {{ data.recover_to }}</td>
+          <td style="padding: 6px"><strong>Received By:</strong> {{ data.received_by }}</td>
+        </tr>
+      </table>
+
+      <!-- Timing Information -->
+      <h3 style="margin-top: 30px">Timing Information</h3>
+      <table width="100%" style="border-collapse: collapse; margin-top: 10px">
+        <tr>
+          <td style="padding: 6px"><strong>Arrival Time:</strong> {{ data.arrival_time|time:"H:i" }}</td>
+          <td style="padding: 6px"><strong>Roadside Time:</strong> {{ data.roadside_time|time:"H:i" }}</td>
+          <td style="padding: 6px"><strong>Recovery Time:</strong> {{ data.recovery_time|time:"H:i" }}</td>
+          <td style="padding: 6px"><strong>Recovery Mileage:</strong> {{ data.recovery_mileage }}</td>
+        </tr>
+      </table>
+
+      <!-- Faults/Parts Fitted -->
+      <h3 style="margin-top: 30px">Faults / Parts Fitted</h3>
+      <p style="margin-top: 10px">{{ data.faults_parts_fitted }}</p>
+
+      <!-- Visual Damage Record -->
+      <h3 style="margin-top: 30px">Visual Damage Record <span style="font-weight: normal">(marked with X)</span></h3>
+
+      <table width="100%" style="table-layout: fixed; border-collapse: collapse; margin-top: 10px">
+        <tr>
+          <td style="width: 50%; border: 1px solid black; padding: 8px; text-align: center; vertical-align: middle">
+            {% if image_cid %}
+            <img src="cid:{{ image_cid }}" alt="Visual Damage" style="max-width: 100%; max-height: 200px; object-fit: contain; display: block; margin: auto" />
+            {% else %}
+            <div style="font-size: 12px; color: gray; height: 180px; display: flex; align-items: center; justify-content: center">Vehicle Diagram</div>
+            {% endif %}
+          </td>
+          <td style="width: 50%; border: 1px solid black; padding: 8px; vertical-align: top">
+            <strong>Notes: {{ data.other }}</strong>
+            <div style="margin-top: 8px; height: 130px"></div>
+          </td>
+        </tr>
+      </table>
+
+      <ol style="font-size: 12px; margin-top: 10px; padding-left: 20px">
+        <li>I accept that accidental damage may be caused to the above vehicle upon moving it.</li>
+        <li>I declare that I give authority to gain access to the above locked vehicle.</li>
+        <li>I authorise unattended delivery of the above vehicle.</li>
+      </ol>
+
+      <!-- Signature and Charges -->
+      <h3 style="margin-top: 30px">Signature and Charges</h3>
+      <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: flex-start">
+        <div style="width: 65%">
+          <p><strong>Signed:</strong> ___________________________________</p>
+          <p><strong>Full Name:</strong> {{ data.name }} (BLOCK CAPITALS)</p>
+        </div>
+        <div style="width: 30%; border: 1px solid black; padding: 10px">
+          <div style="display: flex; justify-content: space-between"><span>Call Out:</span> <span>£{{ data.call_out_pay }}</span></div>
+          <div style="display: flex; justify-content: space-between"><span>Roadside:</span> <span>£{{ data.roadside_pay }}</span></div>
+          <div style="display: flex; justify-content: space-between"><span>Parts:</span> <span>£{{ data.parts_pay }}</span></div>
+          <div style="display: flex; justify-content: space-between"><span>Recovery:</span> <span>£{{ data.recovery_pay }}</span></div>
+
+          <hr style="margin: 8px 0" />
+
+          <div style="display: flex; justify-content: space-between; font-weight: bold"><span>Sub Total:</span> <span>£{{ data.sub_total }}</span></div>
+          <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 16px; margin-top: 8px"><span>Total:</span> <span>£{{ data.total }}</span></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

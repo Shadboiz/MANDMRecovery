@@ -14,11 +14,18 @@
     <div>
       <p class="text-white! text-2xl! mb-6">Quick Links</p>
       <ul class="text-white/50 space-y-4">
-        <li><a href="">Home</a></li>
-        <li><a href="">Services</a></li>
-        <li><a href="">Reviews</a></li>
-        <li><a href="">Advice centre</a></li>
-        <li><a href="">Contact us </a></li>
+        <li>
+          <a href="{% url 'index' %}#Why-Us">Why Us?</a>
+        </li>
+        <li>
+          <a href="{% url 'index' %}#Services">Services</a>
+        </li>
+        <li>
+          <a href="{% url 'index' %}#client-reviews">Reviews</a>
+        </li>
+        <li>
+          <a href="tel:+447417425174" class="">Call Now</a>
+        </li>
       </ul>
     </div>
 
@@ -37,7 +44,7 @@
         <span class="text-white! font-medium">Excellent</span>
         <img src="{% static 'social_icons/trust-pilot.svg' %}" alt="" />
         <span class="max-w-sm text-center text-[#969FB7]"
-          >Rated 5 stars based on 29 <br />
+          >Rated 5 stars based on 30 <br />
           reviews on</span
         >
         <div class="w-32 h-auto">

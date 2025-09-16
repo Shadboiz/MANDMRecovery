@@ -80,6 +80,10 @@
     @apply md:text-lg lg:text-lg leading-relaxed;
   }
 
+  span {
+    @apply text-sm;
+  }
+
   p {
     @apply leading-relaxed;
   }

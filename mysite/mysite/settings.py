@@ -30,6 +30,7 @@ TAILWIND_APP_NAME = "theme"
 
 ALLOWED_HOSTS = ["*"]
 
+
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000/"]
 
 # Application definition
@@ -44,9 +45,12 @@ INSTALLED_APPS = [
     "mysite",
     "tailwind",
     "googlereviews",
+    "accounts",
     "theme",
     "django_browser_reload",
+    "invoice",
 ]
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -132,6 +136,14 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 MEDIA_URL = "/media/"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.ionos.co.uk"  # Replace with the SMTP server provided by IONOS
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "info@mandmrecovery.co.uk"  # Your IONOS email address
+EMAIL_HOST_PASSWORD = "$4Glasgm&m$"  # Your IONOS email password
+DEFAULT_FROM_EMAIL = "info@mandmrecovery.co.uk"
 
 
 # myproject/settings.py

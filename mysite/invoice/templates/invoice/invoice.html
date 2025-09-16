@@ -1,0 +1,344 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" x-data="{ step: 1 }">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Invoice Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl_z8XS7vYA77IHzmLDqfxpmto2f8iKho&libraries=places"></script>
+
+    <!-- prettier-ignore -->
+  </head>
+
+  <body class="bg-gray-100 min-h-screen flex justify-center p-8">
+    <nav x-data="{ mobileMenuIsOpen: false }" class="absolute top-0 left-0 w-full z-50">
+      <!-- Desktop Navbar -->
+      <div class="hidden lg:flex flex-col w-full">
+        <!-- Main Nav -->
+        <div class="bg-white py-2 px-4">
+          <div class="flex flex-row justify-between items-center container mx-auto">
+            <!-- Logo -->
+            <div class="w-32">
+              <a href="{% url 'index' %}">
+                <img src="https://cdn.mandmrecovery.co.uk/logo.svg" alt="Logo" class="w-auto h-auto" />
+              </a>
+            </div>
+
+            <!-- Nav Links -->
+            <ul class="flex flex-row space-x-6 text-base">
+              <li>
+                <a href="{% url 'index' %}#Why-Us">Why Us?</a>
+              </li>
+              <li>
+                <a href="{% url 'index' %}#Services">Services</a>
+              </li>
+              <li>
+                <a href="{% url 'index' %}#client-reviews">Reviews</a>
+              </li>
+              <li>
+                <a href="tel:+447417425174" class="">Call Now</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Navbar -->
+      <div class="lg:hidden">
+        <div class="flex justify-between items-center py-4 px-6 bg-white">
+          <a href="{% url 'index' %}">
+            <img src="https://cdn.mandmrecovery.co.uk/logo.svg" alt="Logo" class="h-13 lg:h-36 w-auto" />
+          </a>
+          <button @click="mobileMenuIsOpen = !mobileMenuIsOpen" class="h-11 lg:h-15 w-auto">
+            <img :src="mobileMenuIsOpen ? 'https://cdn.mandmrecovery.co.uk/exit.svg' : 'https://cdn.mandmrecovery.co.uk/nav-expand-icon.svg'" alt="Menu" />
+          </button>
+        </div>
+
+        <!-- Open Navigation-->
+        <div
+          x-show="mobileMenuIsOpen"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          x-cloak
+          class="fixed inset-0 z-50 bg-white h-screen flex flex-col justify-start px-6 pt-4"
+        >
+          <div class="flex justify-between items-center pb-4 border-b-2 border-gray-200">
+            <a href="{% url 'index' %}">
+              <img src="https://cdn.mandmrecovery.co.uk/logo.svg" alt="Logo" class="h-13 lg:h-36 w-auto" />
+            </a>
+            <button @click="mobileMenuIsOpen = false" class="h-11 lg:h-15 w-auto">
+              <img src="https://cdn.mandmrecovery.co.uk/exit.svg" alt="Close Menu" />
+            </button>
+          </div>
+
+          <nav class="flex flex-col space-y-4 mt-4 w-full">
+            <a href="{% url 'index' %}#Why-Us" x-on:click="mobileMenuIsOpen = false" class="text-gray-800 hover:text-black text-lg flex justify-between items-center w-full">
+              Why Us?
+              <span class="text-xl"><img src="{% static 'navbar/right-arrow.svg' %}" alt="" /></span>
+            </a>
+
+            <a href="{% url 'index' %}#client-reviews" x-on:click="mobileMenuIsOpen = false" class="text-gray-800 hover:text-black text-lg flex justify-between items-center w-full">
+              Reviews
+              <span class="text-xl"><img src="{% static 'navbar/right-arrow.svg' %}" alt="" /></span
+            ></a>
+
+            <a href="{% url 'index' %}#Services" x-on:click="mobileMenuIsOpen = false" class="text-gray-800 hover:text-black text-lg flex justify-between items-center w-full">
+              Services
+              <span class="text-xl"><img src="{% static 'navbar/right-arrow.svg' %}" alt="" /></span
+            ></a>
+          </nav>
+
+          <a href="tel:+447417425174" class="mt-5 mb-10 w-full text-center text-white bg-dark-blue font-semibold py-3 rounded hover:bg-light-blue transition"> {{site_essentials.cta}} </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-5xl w-full bg-white p-10 rounded-xl shadow-xl">
+      <form method="POST" enctype="multipart/form-data" class="space-y-16">
+        {% csrf_token %}
+
+        <h1 class="text-center text-4xl font-extrabold text-gray-900 mb-10 tracking-tight">🚗 M&M Recovery Invoice Maker</h1>
+
+        <!-- Step 1: Customer Details -->
+        <div x-show="step === 1" class="space-y-10" x-transition>
+          <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Customer Details</h2>
+            <p class="mt-1 text-gray-500 text-sm">Please enter customer information carefully.</p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
+              {{ invoice_form.name }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+              {{ invoice_form.address }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
+              {{ invoice_form.postcode }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              {{ invoice_form.email }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Telephone</label>
+              {{ invoice_form.telephone }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Vehicle Details -->
+        <div x-show="step === 2" class="space-y-10" x-transition>
+          <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Vehicle Details</h2>
+            <p class="mt-1 text-gray-500 text-sm">Please enter vehicle details accurately.</p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle</label>
+              {{ invoice_form.vehicle }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Make</label>
+              {{ invoice_form.make }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Model</label>
+              {{ invoice_form.model }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Registration Number</label>
+              {{ invoice_form.reg_number }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Load (kg)</label>
+              {{ invoice_form.load }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Caravan/Trailer</label>
+              {{ invoice_form.caravan_trailer }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Colour</label>
+              {{ invoice_form.colour }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Fuel Type</label>
+              {{ invoice_form.fuel_type }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Transmission</label>
+              {{ invoice_form.transmission }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Keys Available</label>
+              {{ invoice_form.keys_available }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Number of Passengers</label>
+              {{ invoice_form.passengers }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Other Notes</label>
+              {{ invoice_form.other }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Recovery Details -->
+        <div x-show="step === 3" class="space-y-10" x-transition>
+          <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Recovery Details</h2>
+            <p class="mt-1 text-gray-500 text-sm">Fill out the recovery and service details.</p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Recovery Location</label>
+              {{ invoice_form.recovery_location }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Recover To</label>
+              {{ invoice_form.recover_to }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Received By</label>
+              {{ invoice_form.received_by }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Arrival Time</label>
+              {{ invoice_form.arrival_time }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Roadside Time</label>
+              {{ invoice_form.roadside_time }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Recovery Time</label>
+              {{ invoice_form.recovery_time }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Recovery Mileage (mi)</label>
+              {{ invoice_form.recovery_mileage }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Recovery Date</label>
+              {{ invoice_form.recovery_date }}
+            </div>
+
+            <!-- Visual Damage Upload with Preview -->
+            <div class="sm:col-span-2" x-data="imagePreview()" x-init="init()">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Visual Damage Image</label>
+
+              <input
+                type="file"
+                name="visual_damage_image"
+                @change="showPreview($event)"
+                accept="image/*"
+                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+              />
+
+              <template x-if="previewUrl">
+                <div class="mt-4">
+                  <img :src="previewUrl" alt="Image Preview" class="max-w-xs border rounded shadow" />
+                  <button type="button" @click="removePreview" class="mt-2 text-red-500 hover:underline">Remove Image</button>
+                </div>
+              </template>
+            </div>
+
+            <script>
+              function imagePreview() {
+                return {
+                  previewUrl: null,
+
+                  init() {
+                    this.previewUrl = null;
+                  },
+
+                  showPreview(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                      this.previewUrl = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                  },
+
+                  removePreview() {
+                    this.previewUrl = null;
+                    // Optional: Clear the input field as well
+                  },
+                };
+              }
+            </script>
+
+            <div class="sm:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Faults / Parts Fitted</label>
+              {{ invoice_form.faults_parts_fitted }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Payment Info -->
+        <div x-show="step === 4" class="space-y-10" x-transition>
+          <div>
+            <h2 class="text-2xl font-semibold text-gray-800">Payment Info</h2>
+            <p class="mt-1 text-gray-500 text-sm">Fill out the recovery and service details carefully.</p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Call Out Pay (£)</label>
+              {{ invoice_form.call_out_pay }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Roadside Pay (£)</label>
+              {{ invoice_form.roadside_pay }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Parts Pay (£)</label>
+              {{ invoice_form.parts_pay }}
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Recovery Pay (£)</label>
+              {{ invoice_form.recovery_pay }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex items-center justify-between pt-8">
+          <button type="button" x-show="step > 1" @click="step--" class="rounded-md bg-gray-300 px-5 py-2 text-base font-semibold text-gray-800 hover:bg-gray-400 transition">⬅ Back</button>
+          <button type="button" x-show="step < 4" @click="step++" class="rounded-md bg-indigo-600 px-6 py-2 text-base font-semibold text-white hover:bg-indigo-500 transition">Next ➡</button>
+          <button type="submit" x-show="step === 4" class="rounded-md bg-green-600 px-6 py-2 text-base font-semibold text-white hover:bg-green-500 transition">✅ Submit Invoice</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function initAutocomplete() {
+        const inputs = document.querySelectorAll(".autocomplete-input");
+        for (const input of inputs) {
+          new google.maps.places.Autocomplete(input, {
+            componentRestrictions: { country: "uk" },
+            fields: ["address_components", "geometry"],
+          });
+        }
+      }
+
+      google.maps.event.addDomListener(window, "load", initAutocomplete);
+    </script>
+  </body>
+</html>
