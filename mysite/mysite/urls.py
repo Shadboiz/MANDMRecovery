@@ -9,6 +9,9 @@ import invoice.views as invoice_views
 urlpatterns = [
     path("", views.index, name="index"),
     path("invoice/", invoice_views.invoice, name="invoice"),
+    path(
+        "invoice/success/", invoice_views.invoice_success, name="invoice_success"
+    ),  # ✅ add this
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("__reload__/", include("django_browser_reload.urls")),

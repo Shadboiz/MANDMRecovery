@@ -28,10 +28,10 @@ DEBUG = True
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 TAILWIND_APP_NAME = "theme"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["mandmrecovery.co.uk"]
 
 
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000/"]
+CSRF_TRUSTED_ORIGINS = ["https://mandmrecovery.co.uk", "https://www.mandmrecovery.co.uk"]
 
 # Application definition
 
@@ -135,6 +135,7 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+STATIC_ROOT = "/var/www/staticfiles/mandmrecovery/"
 MEDIA_URL = "/media/"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
