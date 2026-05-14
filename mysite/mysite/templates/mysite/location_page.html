@@ -1,0 +1,160 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+{% load static tailwind_tags %}
+
+{% block title %}{% if service_area_location.parent %}{{ service_area_location.name }} Vehicle Recovery Glasgow | M&M Recovery{% else %}Glasgow Vehicle Recovery | M&M Recovery{% endif %}{% endblock %}
+{% block meta_description %}{% if service_area_location.parent %}M&M Recovery provides 24/7 roadside assistance, towing, and breakdown recovery in {{ service_area_location.name }}, Glasgow.{% else %}M&M Recovery provides 24/7 roadside assistance, towing, and breakdown recovery across Glasgow.{% endif %}{% endblock %}
+{% block meta_keywords %}M&M Recovery, M and M Recovery, MandM Recovery, {{ service_area_location.name }} vehicle recovery, Glasgow towing, roadside assistance Glasgow, breakdown recovery Glasgow{% endblock %}
+{% block canonical_url %}https://mandmrecovery.co.uk{{ service_area_location.seo_path }}{% endblock %}
+{% block og_title %}{% if service_area_location.parent %}{{ service_area_location.name }} Vehicle Recovery Glasgow | M&M Recovery{% else %}Glasgow Vehicle Recovery | M&M Recovery{% endif %}{% endblock %}
+{% block og_description %}{% if service_area_location.parent %}24/7 recovery and roadside help in {{ service_area_location.name }}, Glasgow from M&M Recovery.{% else %}24/7 recovery and roadside help across Glasgow from M&M Recovery.{% endif %}{% endblock %}
+{% block og_url %}https://mandmrecovery.co.uk{{ service_area_location.seo_path }}{% endblock %}
+{% block twitter_title %}{% if service_area_location.parent %}{{ service_area_location.name }} Vehicle Recovery Glasgow | M&M Recovery{% else %}Glasgow Vehicle Recovery | M&M Recovery{% endif %}{% endblock %}
+{% block twitter_description %}{% if service_area_location.parent %}24/7 recovery and roadside help in {{ service_area_location.name }}, Glasgow from M&M Recovery.{% else %}24/7 recovery and roadside help across Glasgow from M&M Recovery.{% endif %}{% endblock %}
+
+{% block body %}
+<body class="bg-white antialiased text-black">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T43QFZF3" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
+
+  <div class="pt-16">
+    <section class="relative min-h-[88svh] w-full overflow-hidden flex items-center">
+      {% include 'includes/navbar.html' %}
+
+      <figure class="absolute inset-0 z-[-10] pointer-events-none">
+        <img class="w-full h-full object-cover object-center m-0" src="https://cdn.mandmrecovery.co.uk/luxury-car.webp" alt="" aria-hidden="true" />
+      </figure>
+
+      <main class="relative z-10 w-full text-white">
+        <div class="container mx-auto px-4">
+          <div class="flex flex-col items-center justify-center text-center gap-7 w-full">
+            <div class="w-full max-w-3xl">
+              <h1>{% if service_area_location.parent %}Recovery In {{ service_area_location.name }}{% else %}Recovery Across Glasgow{% endif %}</h1>
+              <p>{% if service_area_location.parent %}Fast vehicle recovery, towing, and roadside support in {{ service_area_location.name }} from a Glasgow team that knows the area.{% else %}Fast vehicle recovery, towing, and roadside support across Glasgow from a local team that moves quickly when you need help most.{% endif %}</p>
+            </div>
+            <div>
+              <a href="tel:{{ site_essentials.phone_number|default:'+447417425174' }}">
+                <button class="blue-btn">{{ site_essentials.cta }}</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <section class="min-h-svh py-20 bg-white">
+    <main class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="bg-dark-blue text-white p-8 space-y-5">
+          <h2 class="mb-4">Vehicle Recovery in {{ service_area_location.name }}</h2>
+          <p class="text-white">{% if service_area_location.parent %}We cover {{ service_area_location.name }} for roadside assistance, towing, accident recovery, and vehicle transport. That means faster local response and clearer communication when you need help urgently.{% else %}We cover Glasgow for roadside assistance, towing, accident recovery, and vehicle transport. That means faster local response and clearer communication when you need help urgently.{% endif %}</p>
+          <p class="text-white">From non-starts to breakdowns and safe transport, the goal is simple: get you secure first, then get the vehicle where it needs to go.</p>
+        </div>
+        <div class="bg-cream p-8 space-y-5">
+          <h2 class="mb-4">Why local coverage matters</h2>
+          <p>Recovery work depends on speed, route knowledge, and getting the vehicle handled correctly from the start. Local area pages help M&amp;M Recovery match each Glasgow neighbourhood with the same core service: 24/7 roadside support, towing, and recovery help when drivers need it most.</p>
+          <p>We are keeping this rollout Glasgow-only so the location coverage stays tight and relevant.</p>
+        </div>
+      </div>
+
+    </main>
+  </section>
+
+  <section id="Services" class="py-20 bg-grayish max-h-full md:max-h-svh">
+    <main class="container mx-auto px-4">
+      <div class="text-center mx-auto max-w-3xl mb-12">
+        <h2 class="mb-4">What We Do in {{ service_area_location.name }}</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white p-5 rounded-3xl shadow-md flex flex-col">
+          <div class="w-full aspect-video overflow-hidden rounded-xl mb-4">
+            <img class="w-full h-full object-cover" src="https://cdn.mandmrecovery.co.uk/tyre-change.png" alt="Tyre Change" />
+          </div>
+          <h5>Tyre Change & Inflation</h5>
+          <p class="text-[16px]">Flat or worn-out tyre? We’ll replace it on the spot or inflate your spare to get you rolling safely.</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl shadow-md flex flex-col">
+          <div class="w-full aspect-video overflow-hidden rounded-xl mb-4">
+            <img class="w-full h-full object-cover" src="https://cdn.mandmrecovery.co.uk/oil-change.png" alt="Oil Change" />
+          </div>
+          <h5>Oil Change Service</h5>
+          <p>Keep your engine healthy with timely oil changes — we offer mobile oil services at your location.</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl shadow-md flex flex-col">
+          <div class="w-full aspect-video overflow-hidden rounded-xl mb-4">
+            <img class="w-full h-full object-cover" src="https://cdn.mandmrecovery.co.uk/battery-start.png" alt="Battery Jumpstart" />
+          </div>
+          <h5>Battery Jumpstart & Replacement</h5>
+          <p>Dead battery? We provide quick jumpstarts or replace your battery wherever you are.</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl shadow-md flex flex-col">
+          <div class="w-full aspect-video overflow-hidden rounded-xl mb-4">
+            <img class="w-full h-full object-cover" src="https://cdn.mandmrecovery.co.uk/fluid-coolants.png" alt="Coolant Top-Ups" />
+          </div>
+          <h5>Coolant & Fluid Top-Ups</h5>
+          <p>Overheating or low fluids? Our team can top up engine coolant, brake fluid, and more.</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <section id="service-areas" class="py-20 bg-white">
+    <div class="mx-auto w-full xl:w-[70%] 2xl:w-[65%] max-w-[1600px] px-4">
+      <!-- Section heading -->
+      <div class="text-center max-w-4xl mx-auto">
+        <h2>Covering <span class="italic text-[#D8AE2A]">{{ service_area_location.name }}</span> and its surrounding areas</h2>
+        <p class="mt-5">We cover {{ service_area_location.name }} and the nearby neighbourhoods below with the same fast, reliable vehicle recovery service.</p>
+      </div>
+
+      <!-- Service areas list -->
+      {% if service_area_children %}
+      <div
+        x-data="{
+          expanded: false,
+          width: window.innerWidth,
+          get visibleCount() {
+            if (this.width >= 1280) return 60;
+            if (this.width >= 1024) return 30;
+            if (this.width >= 768) return 12;
+            return 8;
+          },
+          get isCollapsed() {
+            return !this.expanded && {{ service_area_children|length }} > this.visibleCount;
+          }
+        }"
+        x-init="window.addEventListener('resize', () => { width = window.innerWidth })"
+        class="relative mt-12"
+      >
+        <!-- Grid list -->
+        <div class="grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-3 lg:gap-x-12 xl:grid-cols-4">
+          {% for area in service_area_children %}
+          <a href="{{ area.seo_path }}" x-show="expanded || {{ forloop.counter }} <= visibleCount" x-cloak class="flex items-start gap-3 text-left hover:text-[#D8AE2A] transition-colors duration-200">
+            <img class="mt-1 w-4 h-auto shrink-0" src="https://cdn.mandmrecovery.co.uk/Blue_Location_Icon.svg" alt="" />
+            <span class="underline underline-offset-4">{{ area.name }}</span>
+          </a>
+          {% endfor %}
+        </div>
+
+        <!-- Bottom fade -->
+        <div x-show="isCollapsed" x-cloak class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white via-white/90 to-transparent backdrop-blur-[2px]"></div>
+
+        <!-- Toggle -->
+        <div x-show="{{ service_area_children|length }} > visibleCount" x-cloak class="mt-8 flex justify-center">
+          <button type="button" @click="expanded = !expanded" class="rounded-md bg-[#D8AE2A] px-6 py-3 font-semibold text-dark-blue shadow-[0_10px_30px_rgba(216,174,42,0.35)] backdrop-blur-sm transition hover:scale-[1.02]" x-text="expanded ? 'Show Less' : 'See More'"></button>
+        </div>
+      </div>
+      {% else %}
+      <div class="mt-12 rounded-2xl border border-black/10 bg-[#faf8f3] px-6 py-10 text-center">
+        <p>Service areas for {{ service_area_location.name }} will appear here once they are added in admin.</p>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  {% include 'includes/footer.html' %}
+</body>
+{% endblock body %}

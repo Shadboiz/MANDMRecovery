@@ -28,10 +28,13 @@ DEBUG = True
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 TAILWIND_APP_NAME = "theme"
 
-ALLOWED_HOSTS = ["mandmrecovery.co.uk"]
+ALLOWED_HOSTS = ["mandmrecovery.co.uk", "*"]
 
 
-CSRF_TRUSTED_ORIGINS = ["https://mandmrecovery.co.uk", "https://www.mandmrecovery.co.uk"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://mandmrecovery.co.uk",
+    "https://www.mandmrecovery.co.uk",
+]
 
 # Application definition
 

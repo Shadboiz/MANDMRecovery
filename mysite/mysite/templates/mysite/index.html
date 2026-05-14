@@ -364,6 +364,54 @@
     </main>
   </section>
 
+  <section id="service-areas" class="py-20 bg-white">
+    <div class="mx-auto w-full xl:w-[70%] 2xl:w-[65%] max-w-[1600px] px-4">
+      <div class="text-center max-w-4xl mx-auto">
+        <h2>Covering <span class="italic text-[#D8AE2A]">{{ service_area_city.name|default:"Glasgow" }}</span> and the surrounding areas</h2>
+        <p class="mt-5">We cover {{ service_area_city.name|default:"Glasgow" }} and the nearby areas below with the same fast, reliable vehicle recovery service.</p>
+      </div>
+
+      {% if service_area_children %}
+      <div
+        x-data="{
+          expanded: false,
+          width: window.innerWidth,
+          get visibleCount() {
+            if (this.width >= 1280) return 60;
+            if (this.width >= 1024) return 30;
+            if (this.width >= 768) return 12;
+            return 8;
+          },
+          get isCollapsed() {
+            return !this.expanded && {{ service_area_children|length }} > this.visibleCount;
+          }
+        }"
+        x-init="window.addEventListener('resize', () => { width = window.innerWidth })"
+        class="relative mt-12"
+      >
+        <div class="grid gap-x-8 gap-y-4 grid-cols-2 md:grid-cols-3 lg:gap-x-12 xl:grid-cols-4">
+          {% for area in service_area_children %}
+          <a href="{{ area.seo_path }}" x-show="expanded || {{ forloop.counter }} <= visibleCount" x-cloak class="flex items-start gap-3 text-left hover:text-[#D8AE2A] transition-colors duration-200">
+            <img class="mt-1 w-4 h-auto shrink-0" src="https://cdn.mandmrecovery.co.uk/Blue_Location_Icon.svg" alt="" />
+            <span class="underline underline-offset-4">{{ area.name }}</span>
+          </a>
+          {% endfor %}
+        </div>
+
+        <div x-show="isCollapsed" x-cloak class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white via-white/90 to-transparent backdrop-blur-[2px]"></div>
+
+        <div x-show="{{ service_area_children|length }} > visibleCount" x-cloak class="mt-8 flex justify-center">
+          <button type="button" @click="expanded = !expanded" class="rounded-md bg-[#D8AE2A] px-6 py-3 font-semibold text-dark-blue shadow-[0_10px_30px_rgba(216,174,42,0.35)] backdrop-blur-sm transition hover:scale-[1.02]" x-text="expanded ? 'Show Less' : 'See More'"></button>
+        </div>
+      </div>
+      {% else %}
+      <div class="mt-12 rounded-2xl border border-black/10 bg-[#faf8f3] px-6 py-10 text-center">
+        <p>Service areas for Glasgow will appear here once they are added in admin.</p>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
   {% include 'includes/footer.html' %}
 
   <!-- prettier-ignore -->

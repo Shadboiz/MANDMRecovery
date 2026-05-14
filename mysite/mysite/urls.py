@@ -8,6 +8,8 @@ import invoice.views as invoice_views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("service-areas/<slug:city_slug>/", views.service_area, name="service_area_city"),
+    path("service-areas/<slug:city_slug>/<slug:area_slug>/", views.service_area, name="service_area_area"),
     path("invoice/", invoice_views.invoice, name="invoice"),
     path(
         "invoice/success/", invoice_views.invoice_success, name="invoice_success"
